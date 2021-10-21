@@ -1,47 +1,52 @@
 #include "Framebuffer.h"
+#include "2DRenderer/Image.h"
 
 //#define SLOPE
 #define DDA
 //#define BRESENHAM
 
 Framebuffer::Framebuffer(Renderer* renderer, int width, int height){
-    this->width = width;
-    this->height = height;
+    colorBuffer.width = width;
+    colorBuffer.height = height;
 
     texture = SDL_CreateTexture(renderer->renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, width, height);
 
-    pitch = width * sizeof(color_t);
-    buffer = new uint8_t[pitch * height];
+    colorBuffer.pitch = colorBuffer.width * sizeof(color_t);
+    colorBuffer.data = new uint8_t[colorBuffer.pitch * colorBuffer.height];
 
 }
 
 Framebuffer::~Framebuffer(){
     SDL_DestroyTexture(texture);
-    delete[] buffer;
 }
 
 void Framebuffer::Update(){
-    SDL_UpdateTexture(texture, nullptr, buffer, pitch);
+    SDL_UpdateTexture(texture, nullptr, colorBuffer.data, colorBuffer.pitch);
 }
 
 void Framebuffer::Clear(const color_t& color){
-    for (int i = 0; i < width * height; i++) {
+    for (int i = 0; i < colorBuffer.width * colorBuffer.height; i++) {
 
-        ((color_t*)buffer)[i] = color;
+        ((color_t*)colorBuffer.data)[i] = color;
 
-        //buffer[i * sizeof(color_t)] = color.r;
-        //buffer[i * sizeof(color_t) + 1] = color.g;
-        //buffer[i * sizeof(color_t) + 2] = color.b;
-        //buffer[i * sizeof(color_t) + 3] = color.a;
     }
 }
 
 void Framebuffer::DrawPoint(int x, int y, const color_t& color){
-    if (x < 0 || x >= width || y < 0 || y >= height) return;
+    if (x < 0 || x >= colorBuffer.width || y < 0 || y >= colorBuffer.height) return;
 
-    int i = x + y * width;
+    uint8_t alpha = color.a;
+    uint8_t invAlpha = 255 - alpha;
 
-    ((color_t*)buffer)[i] = color;
+    color_t& destColor = ((color_t*)(colorBuffer.data))[x + y * colorBuffer.width];
+
+    destColor.r = ((color.r * alpha) + (destColor.r * invAlpha)) / 255;
+    destColor.g = ((color.g * alpha) + (destColor.g * invAlpha)) / 255;
+    destColor.b = ((color.b * alpha) + (destColor.b * invAlpha)) / 255;
+
+    /*int i = x + y * colorBuffer.width;
+
+    ((color_t*)colorBuffer.data)[i] = color;*/
 }
 
 void Framebuffer::DrawRect(int x, int y, int rect_width, int rect_height, const color_t& color){
@@ -135,15 +140,23 @@ void Framebuffer::DrawCircle(int cx, int cy, int radius, const color_t& color){
 }
 
 void Framebuffer::DrawCircleOctants(int cx, int cy, int x, int y, const color_t& color){
-    DrawPoint(cx + x, cy + y, color);
-    DrawPoint(cx + x, cy - y, color);
-    DrawPoint(cx - x, cy + y, color);
-    DrawPoint(cx - x, cy - y, color);
+   // DrawPoint(cx + x, cy + y, color);
+    //DrawPoint(cx + x, cy - y, color);
 
-    DrawPoint(cx + y, cy + x, color);
-    DrawPoint(cx + y, cy - x, color);
-    DrawPoint(cx - y, cy + x, color);
-    DrawPoint(cx - y, cy - x, color);
+    DrawLine(cx - x, cy + y, cx + x, cy + y, color);
+    //DrawPoint(cx - x, cy + y, color);
+    //DrawPoint(cx - x, cy - y, color);
+
+    DrawLine(cx - x, cy - y, cx + x, cy - y, color);
+
+    //DrawPoint(cx + y, cy + x, color);
+    //DrawPoint(cx + y, cy - x, color);
+
+    DrawLine(cx - y, cy + x, cx + y, cy + x, color);
+    //DrawPoint(cx - y, cy + x, color);
+    //DrawPoint(cx - y, cy - x, color);
+
+    DrawLine(cx - y, cy - x, cx + y, cy - x, color);
 }
 
 void Framebuffer::DrawSimpleCurve(int x1, int y1, int x2, int y2, int steps, const color_t& color){
@@ -215,4 +228,21 @@ void Framebuffer::DrawCubicCurve(int x1, int y1, int x2, int y2, int x3, int y3,
 
 int Framebuffer::Lerp(int a, int b, float t){
     return (int)(a + ((b-a) * t));
+}
+
+void Framebuffer::DrawImage(int x1, int y2, Image* image){
+    for (int y = 0; y < image->colorBuffer.height; y++)
+    {
+        int sy = y2 + y;
+        for (int x = 0; x < image->colorBuffer.width; x++)
+        {
+            int sx = x1 + x;
+            if (sx >= colorBuffer.width || sy >= colorBuffer.height) continue;
+
+            //((color_t*)colorBuffer.data)[sx + (sy * colorBuffer.width)] = ((color_t*)image->colorBuffer.data)[x + (y * image->colorBuffer.width)];
+            color_t color = ((color_t*)image->colorBuffer.data)[x + (y * image->colorBuffer.width)];
+            DrawPoint(sx, sy, color);
+        }
+    }
+
 }

@@ -22,10 +22,15 @@
     <ClCompile Include="..\Framebuffer.cpp" />
     <ClCompile Include="..\Main.cpp" />
     <ClCompile Include="..\Renderer.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="PostProcess.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Framebuffer.h" />
     <ClInclude Include="..\Renderer.h" />
+    <ClInclude Include="ColorBuffer.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="PostProcess.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
