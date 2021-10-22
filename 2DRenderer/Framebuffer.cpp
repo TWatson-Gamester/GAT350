@@ -1,5 +1,5 @@
 #include "Framebuffer.h"
-#include "2DRenderer/Image.h"
+#include "Image.h"
 
 //#define SLOPE
 #define DDA

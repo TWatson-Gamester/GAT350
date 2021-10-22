@@ -19,18 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Framebuffer.cpp" />
-    <ClCompile Include="..\Main.cpp" />
-    <ClCompile Include="..\Renderer.cpp" />
+    <ClCompile Include="ColorBuffer.cpp" />
+    <ClCompile Include="Framebuffer.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="PostProcess.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Tracer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Framebuffer.h" />
-    <ClInclude Include="..\Renderer.h" />
     <ClInclude Include="ColorBuffer.h" />
+    <ClInclude Include="Framebuffer.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="PostProcess.h" />
+    <ClInclude Include="Ray.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Tracer.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

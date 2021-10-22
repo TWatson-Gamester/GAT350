@@ -1,8 +1,6 @@
 #pragma once
-#include "SDL.h"
+#include "../RayTracer/Types.h"
 #include <memory>
-
-using color_t = SDL_Color;
 
 class Renderer
 {

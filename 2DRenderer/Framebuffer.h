@@ -1,6 +1,6 @@
 #pragma once
 #include "Renderer.h"
-#include "2DRenderer/ColorBuffer.h"
+#include "ColorBuffer.h"
 #include <vector>
 
 class Framebuffer
