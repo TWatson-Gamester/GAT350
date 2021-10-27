@@ -3,6 +3,7 @@
 #include "PostProcess.h"
 #include "Image.h"
 #include "Tracer.h"
+#include "Scene.h"
 
 #include <iostream>
 #include <SDL.h>
@@ -16,8 +17,23 @@ int main(int, char**){
 
 	std::unique_ptr<Framebuffer> framebuffer = std::make_unique<Framebuffer>(renderer.get(), renderer.get()->width, renderer.get()->height);
 
-	Tracer tracer;
+	// ray tracer
+	std::unique_ptr<Tracer> tracer = std::make_unique<Tracer>();
+
+	// scene
+	std::unique_ptr<Scene> scene = std::make_unique<Scene>();
+
+	// plane
+	scene->Add(std::move(std::make_unique<Plane>(glm::vec3{ 0, -5, 0 }, glm::vec3{ 0, 1, 0 })));
+
+	// sphere
+	std::unique_ptr<Sphere> sphere = std::make_unique<Sphere>(glm::vec3{ 0, 0, -10 }, 3.0f);
+	scene->Add(std::move(sphere));
 	
+		framebuffer->Clear({0,0,0,0});
+		tracer->Trace(framebuffer->colorBuffer, scene.get());
+		framebuffer->Update();
+
 	bool quit = false;
 	SDL_Event event;
 	while (!quit)
@@ -30,11 +46,6 @@ int main(int, char**){
 			break;
 		}
 
-		framebuffer->Clear({0,0,0,0});
-
-		tracer.Trace(framebuffer->colorBuffer);
-
-		framebuffer->Update();
 
 		renderer->CopyBuffer(framebuffer.get());
 
