@@ -2,6 +2,7 @@
 #include "Types.h"
 
 struct raycastHit_t {
+	class Material* material;
 	float t{ 0 };
 	glm::vec3 point;
 	glm::vec3 normal;

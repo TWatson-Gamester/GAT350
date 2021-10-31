@@ -7,9 +7,12 @@ public:
 	Plane() = default;
 	Plane(const glm::vec3& center, const glm::vec3& normal) :
 		center{ center },
-		normal{ normal }
-	{
-	}
+		normal{ normal } {}
+	Plane(const glm::vec3& center, const glm::vec3& normal, std::shared_ptr<Material> material) :
+		Geometry{ material },
+		center{ center },
+		normal{ normal } {}
+
 
 	bool Hit(const ray_t& r, float tMin, float tMax, raycastHit_t& hit) override;
 
