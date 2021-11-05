@@ -37,4 +37,6 @@ inline glm::vec2 GetSphericalUV(const glm::vec3& point) {
 
 	uv[0] = phi / (2 * glm::pi<float>());
 	uv[1] = theta / glm::pi<float>();
+
+	return uv;
 }
