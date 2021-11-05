@@ -20,6 +20,9 @@ int main(int, char**){
 	// ray tracer
 	std::unique_ptr<Tracer> tracer = std::make_unique<Tracer>();
 
+	//samplers
+	std::shared_ptr<Image> image = std::make_shared<Image>("../resources/cat.bmp");
+
 	// scene
 	std::unique_ptr<Scene> scene = std::make_unique<Scene>();
 
