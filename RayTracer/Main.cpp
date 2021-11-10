@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "Framebuffer.h"
+#include "Buffer.h"
 #include "PostProcess.h"
 #include "Image.h"
 #include "Tracer.h"
@@ -9,13 +10,17 @@
 #include <SDL.h>
 
 int main(int, char**) {
-	const int WIDTH = 800;
-	const int HEIGHT = 600;
+	const int WIDTH = 400;
+	const int HEIGHT = 300;
+	int samples = 0;
+	srand((unsigned int)time(nullptr));
 
 	std::unique_ptr<Renderer> renderer = std::make_unique<Renderer>();
 	renderer->Initialize(WIDTH, HEIGHT);
 
 	std::unique_ptr<Framebuffer> framebuffer = std::make_unique<Framebuffer>(renderer.get(), renderer.get()->width, renderer.get()->height);
+	std::unique_ptr<Buffer> accumBuffer = std::make_unique<Buffer>(renderer->width, renderer->height);
+	std::unique_ptr<Buffer> buffer = std::make_unique<Buffer>(renderer->width, renderer->height);
 
 	// ray tracer
 	std::unique_ptr<Tracer> tracer = std::make_unique<Tracer>();
@@ -81,11 +86,6 @@ int main(int, char**) {
 	float focalLength = glm::length(eye - lookAt);
 	std::unique_ptr<Camera> camera = std::make_unique<Camera>(eye, lookAt, glm::vec3{ 0, 1, 0 }, 20.0f, glm::ivec2{ framebuffer->colorBuffer.width, framebuffer->colorBuffer.height }, 0.1f, focalLength);
 
-
-	framebuffer->Clear({ 0,0,0,0 });
-	tracer->Trace(framebuffer->colorBuffer, scene.get(), camera.get());
-	framebuffer->Update();
-
 	bool quit = false;
 	SDL_Event event;
 	while (!quit)
@@ -98,6 +98,19 @@ int main(int, char**) {
 			break;
 		}
 
+		// render to accumulation buffer
+		samples += tracer->samples;
+		std::string message = "Samples: " + std::to_string(samples);
+		tracer->Trace(accumBuffer.get(), scene.get(), camera.get(), message);
+
+		// copy accumulation buffer to buffer
+		*buffer.get() = *accumBuffer.get();
+		// process buffer values (average + sqrt)
+		buffer->Process(samples);
+
+		// copy buffer to frame buffer
+		buffer->Copy(framebuffer->colorBuffer);
+		framebuffer->Update();
 
 		renderer->CopyBuffer(framebuffer.get());
 

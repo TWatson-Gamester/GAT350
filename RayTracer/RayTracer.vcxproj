@@ -35,6 +35,7 @@
     <ClCompile Include="Tracer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buffer.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorBuffer.h" />
     <ClInclude Include="Framebuffer.h" />
