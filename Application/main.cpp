@@ -1,5 +1,33 @@
 #include <glad\glad.h>
-#include "sdl.h"
+#include <iostream>
+#include <sdl.h>
+
+// vertices
+const float vertices[] =
+{
+	-0.5f, -0.5f,
+	 0.5f, -0.5f,
+	 0.0f,  0.5f
+};
+
+// vertex shader
+const char* vertexSource = R"(
+    #version 430 core 
+    in vec2 position;
+    void main(){
+        gl_Position = vec4(position * 2, 0.0, 1.0);
+    }
+)";
+
+// fragment
+const char* fragmentSource = R"(
+    #version 430 core
+    out vec4 outColor;
+
+    void main(){
+        outColor = vec4(0.5, 0.0, 0.5, 1.0);
+    }
+)";
 
 int main(int argc, char** argv)
 {
@@ -15,6 +43,9 @@ int main(int argc, char** argv)
 		SDL_Log("Failed to create window: %s", SDL_GetError());
 	}
 
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
@@ -26,7 +57,55 @@ int main(int argc, char** argv)
 		SDL_Log("Failed to create OpenGL context");
 		exit(-1);
 	}
+
+	// set vertex shader
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexSource, NULL);
+	glCompileShader(vertexShader);
+
+	//Check Status of vertex shader
+	GLint status;
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
+	if (status == GL_FALSE)
+	{
+		char buffer[512];
+		glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
+		std::cout << buffer;
+	}
+
+	// set fragment shader
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
+	glCompileShader(fragmentShader);
+
+	//Check Status of fragment shader
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
+	if (status == GL_FALSE)
+	{
+		char buffer[512];
+		glGetShaderInfoLog(fragmentShader, 512, NULL, buffer);
+		std::cout << buffer;
+	}
+
+	// create shader program
+	GLuint shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+
+	// Link shader program
+	glLinkProgram(shaderProgram);
+	glUseProgram(shaderProgram);
+
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(0);
+
 	bool quit = false;
+
 	while (!quit)
 	{
 		SDL_Event event;
@@ -50,16 +129,7 @@ int main(int argc, char** argv)
 		glClearColor(0.85f, 0.85f, 0.85f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glBegin(GL_TRIANGLES);
-
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex2f(-0.5f, -0.5f);
-		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex2f(0.0f, 0.5f);
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex2f(0.5f, -0.5f);
-
-		glEnd();
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		SDL_GL_SwapWindow(window);
 	}
