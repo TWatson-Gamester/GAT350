@@ -9,6 +9,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{02b77f89-eb2d-4bee-9ab7-e9c3e43f8b0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -17,5 +20,13 @@
     <ClCompile Include="..\ThirdParty\glad\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Build\Resources\shaders\basic.vert">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="..\Build\Resources\shaders\basic.frag">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

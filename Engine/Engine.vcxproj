@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)ThirdParty\SDL2-2.0.14\include;$(SolutionDir)ThirdParty\rapidjson\include\rapidjson;$(SolutionDir)ThirdParty\\fmod\api\core\inc;$(SolutionDir)ThirdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)ThirdParty\SDL2-2.0.14\include;$(SolutionDir)ThirdParty\rapidjson\include\rapidjson;$(SolutionDir)ThirdParty\fmod\api\core\inc;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -97,10 +97,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib
+;SDL2_ttf.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\fmod\api\core\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\SDL2-2.0.14\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL2-2.0.14\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\fmod\api\core\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -111,7 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)ThirdParty\SDL2-2.0.14\include;$(SolutionDir)ThirdParty\rapidjson\include\rapidjson;$(SolutionDir)ThirdParty\\fmod\api\core\inc;$(SolutionDir)ThirdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)ThirdParty\SDL2-2.0.14\include;$(SolutionDir)ThirdParty\rapidjson\include\rapidjson;$(SolutionDir)ThirdParty\fmod\api\core\inc;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -122,10 +123,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib
+;SDL2_ttf.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\fmod\api\core\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\SDL2-2.0.14\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL2-2.0.14\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\fmod\api\core\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)ThirdParty\SDL2-2.0.14\include;$(SolutionDir)ThirdParty\rapidjson\include\rapidjson;$(SolutionDir)ThirdParty\\fmod\api\core\inc;$(SolutionDir)ThirdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)ThirdParty\SDL2-2.0.14\include;$(SolutionDir)ThirdParty\rapidjson\include\rapidjson;$(SolutionDir)ThirdParty\fmod\api\core\inc;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -143,10 +145,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib
+;SDL2_ttf.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\fmod\api\core\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\SDL2-2.0.14\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL2-2.0.14\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\fmod\api\core\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -157,7 +160,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)ThirdParty\SDL2-2.0.14\include;$(SolutionDir)ThirdParty\rapidjson\include\rapidjson;$(SolutionDir)ThirdParty\\fmod\api\core\inc;$(SolutionDir)ThirdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)ThirdParty\SDL2-2.0.14\include;$(SolutionDir)ThirdParty\rapidjson\include\rapidjson;$(SolutionDir)ThirdParty\fmod\api\core\inc;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -168,13 +171,15 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib
+;SDL2_ttf.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\fmod\api\core\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\SDL2-2.0.14\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL2-2.0.14\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\fmod\api\core\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\ThirdParty\glad\src\glad.c" />
     <ClCompile Include="Audio\AudioChannel.cpp" />
     <ClCompile Include="Audio\AudioSystem.cpp" />
     <ClCompile Include="Component\AudioComponent.cpp" />
