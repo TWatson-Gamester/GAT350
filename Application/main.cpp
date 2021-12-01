@@ -56,17 +56,16 @@ int main(int argc, char** argv)
 	gn::SeedRandom(static_cast<unsigned int>(time(nullptr)));
 	gn::SetFilePath("../resources");
 
-	std::shared_ptr<gn::Program> program = engine.Get<gn::ResourceSystem>()->Get<gn::Program>("basic_shader");
-	std::shared_ptr<gn::Shader> vshader = engine.Get<gn::ResourceSystem>()->Get<gn::Shader>("shaders/basic.vert", (void*)GL_VERTEX_SHADER);
-	std::shared_ptr<gn::Shader> fshader = engine.Get<gn::ResourceSystem>()->Get<gn::Shader>("shaders/basic.frag", (void*)GL_FRAGMENT_SHADER);
-
+	std::shared_ptr<gn::Program> program = engine.Get<gn::ResourceSystem>()->Get<gn::Program>("light_shader");
+	std::shared_ptr<gn::Shader> vshader = engine.Get<gn::ResourceSystem>()->Get<gn::Shader>("shaders/light.vert", (void*)GL_VERTEX_SHADER);
+	std::shared_ptr<gn::Shader> fshader = engine.Get<gn::ResourceSystem>()->Get<gn::Shader>("shaders/light.frag", (void*)GL_FRAGMENT_SHADER);
 	program->AddShader(vshader);
 	program->AddShader(fshader);
 	program->Link();
 	program->Use();
 
 	//Vertex Buffers
-	std::shared_ptr<gn::VertexIndexBuffer> vertexBuffer = engine.Get<gn::ResourceSystem>()->Get<gn::VertexIndexBuffer>("cube_mesh");
+	std::shared_ptr<gn::VertexBuffer> vertexBuffer = engine.Get<gn::ResourceSystem>()->Get<gn::VertexBuffer>("cube_mesh");
 	vertexBuffer->CreateVertexBuffer(sizeof(vertices), 8, (void*)vertices);
 	vertexBuffer->CreateIndexBuffer(GL_UNSIGNED_INT, 36, (void*)indices);
 	vertexBuffer->SetAttribute(0, 3, 8 * sizeof(float), 0);
@@ -82,16 +81,26 @@ int main(int argc, char** argv)
 
 	texture = engine.Get<gn::ResourceSystem>()->Get<gn::Texture>("textures/wood.png");
 	texture->Bind();
+
+	texture = engine.Get<gn::ResourceSystem>()->Get<gn::Texture>("textures/spot.png");
+	texture->Bind();
+
 	
 		// create camera
 		auto actor = gn::ObjectFactory::Instance().Create<gn::Actor>("Actor");
 		actor->name = "camera";
-		actor->transform.position = glm::vec3{ 0, 0, 10 };
-
-		auto component = gn::ObjectFactory::Instance().Create<gn::CameraComponent>("CameraComponent");
-		component->SetPerspective(45.0f, 800.0f / 600.0f, 0.01f, 100.0f);
-
-		actor->AddComponent(std::move(component));
+		actor->transform.position = glm::vec3{ 0, 0, 5 };
+		{
+			auto component = gn::ObjectFactory::Instance().Create<gn::CameraComponent>("CameraComponent");
+			component->SetPerspective(45.0f, 800.0f / 600.0f, 0.01f, 100.0f);
+			actor->AddComponent(std::move(component));
+		}
+		{
+			auto component = gn::ObjectFactory::Instance().Create<gn::FreeCameraController>("FreeCameraController");
+			component->speed = 3;
+			component->sensitivity = 0.01f;
+			actor->AddComponent(std::move(component));
+		}
 		scene->AddActor(std::move(actor));
 
 	{
@@ -100,13 +109,26 @@ int main(int argc, char** argv)
 		actor->name = "cube";
 		actor->transform.position = glm::vec3{ 0, 0, 0 };
 
-		auto component = gn::ObjectFactory::Instance().Create<gn::MeshComponent>("MeshComponent");
-		component->program = engine.Get<gn::ResourceSystem>()->Get<gn::Program>("basic_shader");
-		component->vertexBuffer = engine.Get<gn::ResourceSystem>()->Get<gn::VertexIndexBuffer>("cube_mesh");
+		auto component = gn::ObjectFactory::Instance().Create<gn::ModelComponent>("ModelComponent");
+		component->program = engine.Get<gn::ResourceSystem>()->Get<gn::Program>("light_shader");
+		component->model = engine.Get<gn::ResourceSystem>()->Get<gn::Model>("models/spot.obj");
 
 		actor->AddComponent(std::move(component));
 		scene->AddActor(std::move(actor));
 	}
+
+	//lighting
+	auto shader = engine.Get<gn::ResourceSystem>()->Get<gn::Program>("light_shader");
+	shader->SetUniform("light.ambient", glm::vec3{ 0.2f });
+	shader->SetUniform("material.ambient", glm::vec3{ 1 });
+
+	shader->SetUniform("light.diffuse", glm::vec3{ 1 });
+	shader->SetUniform("material.diffuse", glm::vec3{ 1 });
+
+	shader->SetUniform("light.specular", glm::vec3{ 1 });
+	shader->SetUniform("material.specular", glm::vec3{ 1 });
+
+	shader->SetUniform("light.position", glm::vec4{ 4, 4, 4, 1 });
 
 	glm::vec3 translate{ 0 };
 	float angle = 0;
@@ -134,18 +156,9 @@ int main(int argc, char** argv)
 		scene->Update(engine.time.deltaTime);
 
 		// update actor
-		glm::vec3 direction{ 0 };
-		if (engine.Get<gn::InputSystem>()->GetKeyState(SDL_SCANCODE_A) == gn::InputSystem::eKeyState::Hold) direction.x = -1;
-		if (engine.Get<gn::InputSystem>()->GetKeyState(SDL_SCANCODE_D) == gn::InputSystem::eKeyState::Hold) direction.x = 1;
-		if (engine.Get<gn::InputSystem>()->GetKeyState(SDL_SCANCODE_W) == gn::InputSystem::eKeyState::Hold) direction.z = -1;
-		if (engine.Get<gn::InputSystem>()->GetKeyState(SDL_SCANCODE_S) == gn::InputSystem::eKeyState::Hold) direction.z = 1;
-		if (engine.Get<gn::InputSystem>()->GetKeyState(SDL_SCANCODE_E) == gn::InputSystem::eKeyState::Hold) direction.y = 1;
-		if (engine.Get<gn::InputSystem>()->GetKeyState(SDL_SCANCODE_Q) == gn::InputSystem::eKeyState::Hold) direction.y = -1;
-
 		auto actor = scene->FindActor("cube");
 		if (actor != nullptr)
 		{
-			actor->transform.position += direction * 5.0f * engine.time.deltaTime;
 			actor->transform.rotation.y += engine.time.deltaTime;
 		}
 

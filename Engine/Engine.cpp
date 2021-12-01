@@ -15,6 +15,8 @@ namespace gn {
 		REGISTER_CLASS(AudioComponent);
 		REGISTER_CLASS(CameraComponent);
 		REGISTER_CLASS(MeshComponent);
+		REGISTER_CLASS(ModelComponent);
+		REGISTER_CLASS(FreeCameraController);
 	}
 
 	void Engine::Shutdown(){
