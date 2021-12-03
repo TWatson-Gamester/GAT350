@@ -1,6 +1,7 @@
 #pragma once
 
 #define REGISTER_CLASS(CLASS) gn::ObjectFactory::Instance().Register<CLASS>(#CLASS);
+#define CREATE_ENGINE_OBJECT(class) gn::ObjectFactory::Instance().Create<gn::class>(#class);
 
 //Core
 #include "Core/FileSystem.h"

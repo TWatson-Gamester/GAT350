@@ -17,6 +17,7 @@ namespace gn {
 		REGISTER_CLASS(MeshComponent);
 		REGISTER_CLASS(ModelComponent);
 		REGISTER_CLASS(FreeCameraController);
+		REGISTER_CLASS(LightComponent);
 	}
 
 	void Engine::Shutdown(){
