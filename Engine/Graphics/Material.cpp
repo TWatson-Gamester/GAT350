@@ -53,9 +53,9 @@ namespace gn
 		// update shader material properties
 		shader->SetUniform("material.ambient", ambient);
 		//<set material diffuse, specular, and shininess uniforms>
-		shader->SetUniform("light.diffuse", diffuse);
-		shader->SetUniform("light.specular", specular);
-		shader->SetUniform("light.position", shininess);
+		shader->SetUniform("material.diffuse", diffuse);
+		shader->SetUniform("material.specular", specular);
+		shader->SetUniform("material.shininess", shininess);
 
 			// set the textures (bind)
 			// maybe try using std::for_each

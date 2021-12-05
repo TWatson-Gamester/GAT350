@@ -28,7 +28,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Build\Resources\shaders\light.vert">
+    <None Include="..\Build\Resources\shaders\gouraud.vert">
       <Filter>Resources\Shaders</Filter>
     </None>
     <None Include="..\Build\Resources\shaders\basic.frag">
@@ -37,7 +37,7 @@
     <None Include="..\Build\Resources\shaders\basic.vert">
       <Filter>Resources\Shaders</Filter>
     </None>
-    <None Include="..\Build\Resources\shaders\light.frag">
+    <None Include="..\Build\Resources\shaders\gouraud.frag">
       <Filter>Resources\Shaders</Filter>
     </None>
     <None Include="..\Build\Resources\materials\spot.mtl">
@@ -46,7 +46,25 @@
     <None Include="..\Build\Resources\materials\wood.mtl">
       <Filter>Resources\Materials</Filter>
     </None>
-    <None Include="..\Build\Resources\shaders\light.shdr">
+    <None Include="..\Build\Resources\shaders\gouraud.shdr">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Build\Resources\shaders\flat.shdr">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Build\Resources\shaders\flat.vert">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Build\Resources\shaders\flat.frag">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Build\Resources\shaders\phong.shdr">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Build\Resources\shaders\phong.vert">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Build\Resources\shaders\phong.frag">
       <Filter>Resources\Shaders</Filter>
     </None>
   </ItemGroup>

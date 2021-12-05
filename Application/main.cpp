@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 		actor->transform.scale = glm::vec3{ 1 };
 
 		auto component = CREATE_ENGINE_OBJECT(ModelComponent);
-		component->model = engine->Get<gn::ResourceSystem>()->Get<gn::Model>("models/cube.obj");
+		component->model = engine->Get<gn::ResourceSystem>()->Get<gn::Model>("models/sphere.obj");
 		component->material = engine->Get<gn::ResourceSystem>()->Get<gn::Material>("materials/wood.mtl", engine.get());
 
 		actor->AddComponent(std::move(component));
@@ -54,10 +54,10 @@ int main(int argc, char** argv)
 	{
 		auto actor = CREATE_ENGINE_OBJECT(Actor);
 		actor->name = "light";
-		actor->transform.position = glm::vec3{ 4 };
+		actor->transform.position = glm::vec3{ 4, 1, 4 };
 
 		auto component = CREATE_ENGINE_OBJECT(LightComponent);
-		component->ambient = glm::vec3{ 0.2f };
+		component->ambient = glm::vec3{ .2f };
 		component->diffuse = glm::vec3{ 1 };
 		component->specular = glm::vec3{ 1 };
 
