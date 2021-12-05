@@ -166,6 +166,7 @@
   <ItemGroup>
     <None Include="..\Build\Resources\materials\spot.mtl" />
     <None Include="..\Build\Resources\materials\wood.mtl" />
+    <None Include="..\Build\Resources\scenes\main.scn" />
     <None Include="..\Build\Resources\shaders\basic.frag" />
     <None Include="..\Build\Resources\shaders\basic.vert" />
     <None Include="..\Build\Resources\shaders\flat.frag" />

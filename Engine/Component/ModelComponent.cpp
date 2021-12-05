@@ -1,6 +1,5 @@
 #include "ModelComponent.h"
-#include "CameraComponent.h"
-#include "Object/Actor.h"
+#include "Engine.h"
 
 namespace gn
 {
@@ -30,6 +29,15 @@ namespace gn
 
 	bool ModelComponent::Read(const rapidjson::Value& value)
 	{
+		std::string model_name;
+		JSON_READ(value, model_name);
+		model = owner->scene->engine->Get<gn::ResourceSystem>()->Get<gn::Model>(model_name);
+
+		std::string material_name;
+		JSON_READ(value, material_name);
+		material = owner->scene->engine->Get<gn::ResourceSystem>()->Get<gn::Material>(material_name, owner->scene->engine);
+
 		return true;
+
 	}
 }

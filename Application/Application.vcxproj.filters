@@ -18,6 +18,9 @@
     <Filter Include="Resources\Materials">
       <UniqueIdentifier>{eddd6735-0b34-45ee-8c57-cba7d068c32e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\scenes">
+      <UniqueIdentifier>{e8c31b55-b7f1-4f06-bae5-28a2997dcd80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,6 +69,9 @@
     </None>
     <None Include="..\Build\Resources\shaders\phong.frag">
       <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Build\Resources\scenes\main.scn">
+      <Filter>Resources\scenes</Filter>
     </None>
   </ItemGroup>
 </Project>
