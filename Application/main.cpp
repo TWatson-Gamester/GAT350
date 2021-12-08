@@ -44,11 +44,19 @@ int main(int argc, char** argv)
 		engine->Update();
 		scene->Update(engine->time.deltaTime);
 
-		// update actor
-		auto actor = scene->FindActor("model");
+		// update actor -- Rotates Actor
+		//auto actor = scene->FindActor("model");
+		//if (actor != nullptr)
+		//{
+		//	actor->transform.rotation.y += engine->time.deltaTime;
+		//}
+
+		// update actor -- Rotates Light
+		auto actor = scene->FindActor("light");
 		if (actor != nullptr)
 		{
-			actor->transform.rotation.y += engine->time.deltaTime;
+			glm::mat3 rotation = glm::rotate(engine->time.deltaTime, glm::vec3{ 0, 0, 1 });
+			actor->transform.position = actor->transform.position * rotation;
 		}
 
 		engine->Get<gn::Renderer>()->BeginFrame();

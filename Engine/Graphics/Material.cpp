@@ -18,7 +18,6 @@ namespace gn
 		}
 
 		// color values
-		JSON_READ(document, ambient);
 		//<read the json diffuse, specular and shininess>
 		JSON_READ(document, diffuse);
 		JSON_READ(document, specular);
@@ -34,9 +33,11 @@ namespace gn
 		std::vector<std::string> texture_names;
 		JSON_READ(document, texture_names);
 
+		GLuint units[] = { GL_TEXTURE0, GL_TEXTURE1, GL_TEXTURE2, GL_TEXTURE3, GL_TEXTURE4, GL_TEXTURE5 };
+		size_t i = 0;
 		for (auto& name : texture_names)
 		{
-			auto texture = engine->Get<ResourceSystem>()->Get<Texture>(name);//<use the resource system and get Texture>(name);
+			auto texture = engine->Get<ResourceSystem>()->Get<Texture>(name, (void*)units[i++]);//<use the resource system and get Texture>(name);
 			if (texture.get()) // check for valid texture
 			{
 				AddTexture(texture);
@@ -51,7 +52,6 @@ namespace gn
 		// set the shader (bind)
 		shader->Use();
 		// update shader material properties
-		shader->SetUniform("material.ambient", ambient);
 		//<set material diffuse, specular, and shininess uniforms>
 		shader->SetUniform("material.diffuse", diffuse);
 		shader->SetUniform("material.specular", specular);
